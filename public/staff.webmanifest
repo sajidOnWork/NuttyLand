@@ -1,0 +1,10 @@
+{
+    "name": "NuttyLand Staff",
+    "short_name": "NuttyLand",
+    "start_url": "/staff/sell",
+    "scope": "/staff/",
+    "display": "standalone",
+    "background_color": "#fbf6ef",
+    "theme_color": "#55301a",
+    "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

@@ -1,0 +1,40 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --color-nut-50: #fbf6ef;
+    --color-nut-100: #f4e8d8;
+    --color-nut-200: #e8d2b4;
+    --color-nut-300: #d6b186;
+    --color-nut-400: #c08b55;
+    --color-nut-500: #a86b35;
+    --color-nut-600: #8a5226;
+    --color-nut-700: #6e3f1d;
+    --color-nut-800: #55301a;
+    --color-nut-900: #3d2213;
+    --color-leaf-50: #eef6ee;
+    --color-leaf-100: #d6ead7;
+    --color-leaf-600: #2f7a3b;
+    --color-leaf-700: #23602d;
+}
+
+@utility btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-nut-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primary { @apply btn bg-nut-700 text-white hover:bg-nut-800; }
+@utility btn-secondary { @apply btn border border-nut-300 bg-white text-nut-800 hover:bg-nut-50; }
+@utility btn-success { @apply btn bg-leaf-600 text-white hover:bg-leaf-700; }
+@utility btn-danger { @apply btn bg-red-600 text-white hover:bg-red-700; }
+@utility input {
+    @apply block w-full rounded-lg border border-nut-200 bg-white px-3 py-2.5 text-sm text-nut-900 placeholder:text-nut-400 focus:border-nut-500 focus:ring-2 focus:ring-nut-200 focus:outline-none;
+}
+@utility label { @apply mb-1 block text-sm font-medium text-nut-800; }
+@utility card { @apply rounded-xl border border-nut-100 bg-white shadow-sm; }
+@utility badge { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+
+[x-cloak] { display: none !important; }
