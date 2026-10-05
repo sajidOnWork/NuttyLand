@@ -58,7 +58,7 @@ class ProductResource extends Resource
                 Select::make('category_id')->relationship('category', 'name')->required()->preload(),
                 Select::make('status')->options(['draft' => 'Draft (hidden)', 'active' => 'Active (on sale)', 'inactive' => 'Inactive'])->default('draft')->required(),
                 Textarea::make('description')->rows(3)->columnSpanFull(),
-                FileUpload::make('image_path')->label('Photo')->image()->disk('public')->directory('products')->imageEditor()->maxSize(4096)->columnSpanFull(),
+                FileUpload::make('image_path')->label('Photo')->image()->disk(config('filesystems.media_disk'))->directory('products')->visibility('public')->imageEditor()->maxSize(4096)->columnSpanFull(),
             ]),
             Section::make('Attributes')->columns(3)->schema([
                 Select::make('roast_style')->options(Product::ROAST_STYLES),
@@ -86,7 +86,7 @@ class ProductResource extends Resource
         return $table
             ->defaultSort('name')
             ->columns([
-                ImageColumn::make('image_path')->label('')->disk('public')->square()->size(40),
+                ImageColumn::make('image_url')->label('')->square()->size(40),
                 TextColumn::make('name')->searchable()->sortable()->weight('bold'),
                 TextColumn::make('category.name')->sortable(),
                 TextColumn::make('variants_count')->counts('variants')->label('Sizes'),

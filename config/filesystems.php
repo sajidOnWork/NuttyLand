@@ -16,6 +16,12 @@ return [
     'default' => env('FILESYSTEM_DISK', 'local'),
 
     /*
+    | Disk used for product photos. "public" stores them on the server's disk.
+    | On Laravel Cloud, attach a bucket and set MEDIA_DISK=s3 so photos survive redeploys.
+    */
+    'media_disk' => env('MEDIA_DISK', 'public'),
+
+    /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
     |--------------------------------------------------------------------------
@@ -41,7 +47,9 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
+            // Served through the /media route (see routes/web.php), so images work without
+            // `php artisan storage:link` and whatever APP_URL is set to.
+            'url' => '/media',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,

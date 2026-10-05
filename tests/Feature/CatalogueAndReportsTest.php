@@ -7,6 +7,8 @@ use App\Services\OrderService;
 use App\Services\ReportService;
 use App\Services\SaleService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Tests\Concerns\BuildsNuttyLand;
 use Tests\TestCase;
@@ -84,5 +86,22 @@ class CatalogueAndReportsTest extends TestCase
         $this->assertGreaterThanOrEqual(4, $created);
         $this->assertSame(0, $generate(), 'running again adds nothing');
         $this->assertTrue($this->market->marketDays()->whereKeyNot($this->marketDay->id)->get()->every(fn ($d) => $d->date->isSaturday()));
+    }
+
+    public function test_uploaded_product_photo_is_shown_on_the_website(): void
+    {
+        Storage::fake('public');
+        $path = UploadedFile::fake()->image('almonds.jpg', 400, 300)->store('products', 'public');
+        $product = \App\Models\Product::where('slug', 'almonds')->first();
+        $product->update(['image_path' => $path]);
+
+        $this->assertSame(url('/media/'.$path), $product->image_url);
+        $this->get('/products/almonds')->assertOk()->assertSee('/media/'.$path, false);
+        $this->get('/shop')->assertSee('/media/'.$path, false);
+        $this->get('/media/'.$path)->assertOk()->assertHeader('content-type', 'image/jpeg');
+
+        $this->get('/media/products/missing.jpg')->assertNotFound();
+        $this->get('/media/../.env')->assertNotFound();
+        $this->get('/media/products/../../.env')->assertNotFound();
     }
 }

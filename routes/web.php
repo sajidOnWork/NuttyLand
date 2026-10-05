@@ -18,6 +18,7 @@ Route::get('/', [CatalogueController::class, 'home'])->name('home');
 Route::get('/shop', [CatalogueController::class, 'index'])->name('shop');
 Route::get('/products/{product:slug}', [CatalogueController::class, 'show'])->name('products.show');
 Route::get('/markets', [CatalogueController::class, 'markets'])->name('markets');
+Route::get('/media/{path}', \App\Http\Controllers\MediaController::class)->where('path', '.*')->name('media');
 
 Route::get('/cart', [CartController::class, 'show'])->name('cart');
 Route::post('/cart', [CartController::class, 'add'])->name('cart.add');
